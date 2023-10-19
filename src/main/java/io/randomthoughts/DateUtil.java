@@ -57,11 +57,11 @@ public class DateUtil {
         return TryCatch.attempt(() -> fileNameDateFormatter.parse(dateString));
     }
 
-    public static Date fromUtc(Date date){
+    public static Date fromUtc(Date date) {
         return new Date(date.getTime() + Calendar.getInstance().getTimeZone().getOffset(new Date().getTime()));
     }
 
-    public static Date toUtc(Date date){
+    public static Date toUtc(Date date) {
         return new Date(date.getTime() - Calendar.getInstance().getTimeZone().getOffset(date.getTime()));
     }
 }

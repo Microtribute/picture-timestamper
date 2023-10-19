@@ -6,8 +6,7 @@ public class FileName {
     private final String baseName;
     private final String extension;
 
-    public FileName(String baseName, String extension)
-    {
+    public FileName(String baseName, String extension) {
         this.baseName = baseName;
         this.extension = extension;
     }

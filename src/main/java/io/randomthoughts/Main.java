@@ -19,18 +19,7 @@ public class Main {
 
     // Get the date created using ffprobe
     private static Date probeDateTaken(File file) {
-        var output = runCommand(
-        "ffprobe.exe",
-            "-v",
-            "error",
-            "-select_streams",
-            "v:0",
-            "-show_entries",
-            "format_tags=creation_time",
-            "-of",
-            "default=noprint_wrappers=1:nokey=1",
-            file.getAbsolutePath()
-        );
+        var output = runCommand("ffprobe.exe", "-v", "error", "-select_streams", "v:0", "-show_entries", "format_tags=creation_time", "-of", "default=noprint_wrappers=1:nokey=1", file.getAbsolutePath());
 
         if (!output.isEmpty()) {
             return DateUtil.fromProbedDate(output.get(0));
@@ -40,23 +29,12 @@ public class Main {
     }
 
     private static Date exifDateTaken(File file) {
-        var output = runCommand(
-                "exiftool.exe",
-                "-ExtractEmbedded",
-                "-CreationDate",
-                "-CreateDate",
-                "-S",
-                file.getAbsolutePath()
-        );
+        var output = runCommand("exiftool.exe", "-ExtractEmbedded", "-CreationDate", "-CreateDate", "-S", file.getAbsolutePath());
 
         var creationDate = parseExifDate("CreationDate", output);
         var createDate = parseExifDate("CreateDate", output);
 
-        return Stream.of(creationDate, createDate)
-            .filter(Objects::nonNull)
-            .sorted()
-            .findFirst()
-            .orElse(null);
+        return Stream.of(creationDate, createDate).filter(Objects::nonNull).sorted().findFirst().orElse(null);
     }
 
     private static Optional<Date> getDateTaken(File file) {

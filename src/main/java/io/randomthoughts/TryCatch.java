@@ -2,11 +2,7 @@ package io.randomthoughts;
 
 public class TryCatch {
     public static <T> T attempt(CheckedSupplier<T> supplier) {
-        try {
-            return supplier.get();
-        } catch (RuntimeException e) {
-            return null;
-        }
+        return attempt(supplier, null);
     }
 
     public static <T> T attempt(CheckedSupplier<T> supplier, T defaultValue) {
